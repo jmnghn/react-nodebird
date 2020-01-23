@@ -1,3 +1,4 @@
+---
 - Express
 - 디비(MySQL)
 - ORM(시퀄라이즈)
@@ -10,3 +11,4 @@
 - Redux
 - Redux-saga
 - Styled Components
+---
