@@ -28,7 +28,7 @@ NodeBird.propTypes = {
     store: PropTypes.object,
 };
 
-export default withRedux((initialState, options) => {
+const configureStore = (initialState, options) => {
     const sagaMiddleware = createSagaMiddleware();
     const middlewares = [sagaMiddleware];
     const enhancer =
@@ -43,4 +43,6 @@ export default withRedux((initialState, options) => {
     const store = createStore(reducer, initialState, enhancer);
     sagaMiddleware.run(rootSaga);
     return store;
-})(NodeBird);
+};
+
+export default withRedux(configureStore)(NodeBird);

@@ -12,6 +12,7 @@
     "license": "ISC",
     "dependencies": {
         "antd": "^3.26.5",
+        "axios": "^0.19.2",
         "next": "^9.1.6",
         "next-redux-wrapper": "^4.0.1",
         "prop-types": "^15.7.2",
@@ -23,7 +24,9 @@
     },
     "devDependencies": {
         "eslint": "^6.8.0",
+        "eslint-config-airbnb": "^18.0.1",
         "eslint-plugin-import": "^2.19.1",
+        "eslint-plugin-jsx-a11y": "^6.2.3",
         "eslint-plugin-react": "^7.17.0",
         "eslint-plugin-react-hooks": "^2.3.0",
         "nodemon": "^2.0.2",
