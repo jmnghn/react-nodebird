@@ -2,9 +2,9 @@ import React from 'react';
 import Link from 'next/link';
 import PropTypes from 'prop-types';
 import { Col, Input, Menu, Row } from 'antd';
+import { useSelector } from 'react-redux';
 import LoginForm from './LoginForm';
 import UserProfile from './UserProfile';
-import { useSelector } from 'react-redux';
 
 const AppLayout = ({ children }) => {
     const { isLoggedIn } = useSelector((state) => state.user);
@@ -34,7 +34,7 @@ const AppLayout = ({ children }) => {
                 </Col>
                 <Col xs={24} md={6}>
                     <Link href="">
-                        <a target="_blank">Made by Jngmnghn</a>
+                        <a target="_blank">Made by Jeong myeonghyeon</a>
                     </Link>
                 </Col>
             </Row>
