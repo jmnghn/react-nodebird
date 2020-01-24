@@ -31,16 +31,15 @@ const Signup = () => {
     const [nick, onChangeNick] = useInput('');
     const [password, onChangePassword] = useInput('');
 
-    const { isSigninUp, me } = useSelector((state) => state.user);
+    const { isSigninUp, isSignedUp, me } = useSelector((state) => state.user);
 
     const dispatch = useDispatch();
 
     useEffect(() => {
-        if (me) {
-            alert('로그인 > 메인페이지 이동');
+        if (isSignedUp) {
             Router.push('/');
         }
-    }, [me && me.id]);
+    }, [isSignedUp]);
 
     const onSubmit = useCallback(
         (e) => {

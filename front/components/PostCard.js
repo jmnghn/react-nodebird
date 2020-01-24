@@ -43,7 +43,7 @@ const PostCard = ({ post }) => {
     return (
         <div>
             <Card
-                key={+post.createdAt}
+                // key={post.id}
                 cover={post.img && <img alt="example" src={post.img} />}
                 actions={[
                     <Icon type="retweet" key="retweet" />,
@@ -94,7 +94,7 @@ PostCard.propTypes = {
         User: PropTypes.object,
         content: PropTypes.string,
         img: PropTypes.string,
-        createdAt: PropTypes.object,
+        createdAt: PropTypes.string,
     }),
 };
 
