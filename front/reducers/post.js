@@ -115,7 +115,7 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 isAddingPost: false,
-                mainPosts: [dummyPost, ...state.mainPosts],
+                mainPosts: [action.data, ...state.mainPosts],
                 postAdded: true,
             };
         }

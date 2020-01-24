@@ -37,7 +37,7 @@ const Signup = () => {
 
     useEffect(() => {
         if (me) {
-            // alert('로그인 > 메인페이지 이동');
+            alert('로그인 > 메인페이지 이동');
             Router.push('/');
         }
     }, [me && me.id]);
