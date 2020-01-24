@@ -13,6 +13,9 @@ import {
     LOAD_USER_REQUEST,
     LOAD_USER_SUCCESS,
     LOAD_USER_FAILURE,
+    LOAD_HASHTAG_POSTS_REQUEST,
+    LOAD_HASHTAG_POSTS_SUCCESS,
+    LOAD_HASHTAG_POSTS_FAILURE,
 } from '../reducers/user';
 
 function loginAPI(loginData) {
@@ -85,17 +88,19 @@ function* watchLogout() {
     yield takeEvery(LOG_OUT_REQUEST, logout);
 }
 
-function loadUserAPI() {
-    return axios.get('/user/', {
+function loadUserAPI(userId) {
+    console.log('loadUserAPI', userId);
+    return axios.get(userId ? `/user/${userId}` : `/user/`, {
         withCredentials: true,
     });
 }
-function* loadUser() {
+function* loadUser(action) {
     try {
-        const result = yield call(loadUserAPI);
+        const result = yield call(loadUserAPI, action.data);
         yield put({
             type: LOAD_USER_SUCCESS,
             data: result.data,
+            me: !action.data,
         });
     } catch (error) {
         console.log(error);

@@ -38,7 +38,40 @@ router.post('/', async (req, res, next) => {
         return next(error);
     }
 });
-router.get('/:id', (req, res) => {});
+// GET /user/:id
+router.get('/:id', async (req, res, next) => {
+    try {
+        const user = await db.User.findOne({
+            where: { id: parseInt(req.params.id, 10) },
+            include: [
+                {
+                    model: db.Post,
+                    as: 'Posts',
+                    attributes: ['id'],
+                },
+                {
+                    model: db.User,
+                    as: 'Followings',
+                    attributes: ['id'],
+                },
+                {
+                    model: db.User,
+                    as: 'Followers',
+                    attributes: ['id', 'nickname'],
+                },
+            ],
+            attributes: ['id', 'nickname'],
+        });
+        const jsonUser = user.toJSON();
+        jsonUser.Posts = jsonUser.Posts ? jsonUser.Posts.length : 0;
+        jsonUser.Followings = jsonUser.Followings ? jsonUser.Followings.length : 0;
+        jsonUser.Followers = jsonUser.Followers ? jsonUser.Followers.length : 0;
+        res.json(user);
+    } catch (error) {
+        console.error(error);
+        next(error);
+    }
+});
 router.post('/logout', (req, res) => {
     req.logout();
     req.session.destroy();
@@ -90,6 +123,24 @@ router.post('/login', (req, res, next) => {
 router.get('/:id/follow', (req, res) => {});
 router.post('/:id/follow', (req, res) => {});
 router.delete('/:id/follow', (req, res) => {});
-router.get('/:id/posts', (req, res) => {});
+router.get('/:id/posts', async (req, res, next) => {
+    try {
+        const posts = await db.Post.findAll({
+            where: {
+                UserId: parseInt(req.params.id, 10),
+            },
+            include: [
+                {
+                    model: db.User,
+                    attributes: ['id', 'nickname'],
+                },
+            ],
+        });
+        res.json(posts);
+    } catch (error) {
+        console.error(error);
+        next(error);
+    }
+});
 
 module.exports = router;
