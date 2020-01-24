@@ -20,7 +20,12 @@ passportConfig();
 app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cors());
+app.use(
+    cors({
+        origin: true,
+        credentials: true,
+    }),
+);
 app.use(cookieParser(process.env.COOKIE_SECRET));
 app.use(
     expressSession({
@@ -31,6 +36,7 @@ app.use(
             httpOnly: true,
             secure: false, // https를 쓸 때 true
         },
+        name: 'ngh',
     }),
 );
 app.use(passport.initialize()); // expressSession 에 의존도가 있어서 그 하단에서 실행해줘야 한다.
