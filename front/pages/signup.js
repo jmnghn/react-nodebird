@@ -37,7 +37,7 @@ const Signup = () => {
 
     useEffect(() => {
         if (me) {
-            alert('로그인 > 메인페이지 이동');
+            // alert('로그인 > 메인페이지 이동');
             Router.push('/');
         }
     }, [me && me.id]);
@@ -53,13 +53,13 @@ const Signup = () => {
             }
             dispatch(
                 signUpRequestAction({
-                    id,
+                    userId: id,
                     password,
-                    nick,
+                    nickname: nick,
                 }),
             );
         },
-        [password, passwordCheck, term],
+        [id, nick, password, passwordCheck, term],
     );
 
     const onChangePasswordCheck = useCallback(

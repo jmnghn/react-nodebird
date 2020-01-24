@@ -16,7 +16,7 @@ const LoginForm = () => {
             e.preventDefault();
             dispatch(
                 loginRequestAction({
-                    id,
+                    userId: id,
                     password,
                 }),
             );

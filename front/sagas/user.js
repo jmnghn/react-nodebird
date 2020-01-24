@@ -1,4 +1,4 @@
-import { all, fork, put, call, takeEvery, delay } from 'redux-saga/effects';
+import { all, fork, put, call, takeEvery, delay, takeLatest } from 'redux-saga/effects';
 import axios from 'axios';
 import {
     LOG_IN_REQUEST,
@@ -7,22 +7,34 @@ import {
     SIGN_UP_REQUEST,
     SIGN_UP_SUCCESS,
     SIGN_UP_FAILURE,
+    LOG_OUT_REQUEST,
+    LOG_OUT_SUCCESS,
+    LOG_OUT_FAILURE,
 } from '../reducers/user';
 
-function loginAPI() {
+axios.defaults.baseURL = 'http://localhost:3065/api';
+
+function loginAPI(loginData) {
     // 서버에 요청을 보내는 부분
+    return axios.post('/user/login', loginData);
 }
 
-function signUpAPI() {
+function signUpAPI(signUpdata) {
     // 서버에 요청을 보내는 부분
+    return axios.post('/user', signUpdata);
 }
 
-function* login() {
+function logoutAPI() {
+    // 서버에 요청을 보내는 부분
+    return axios.post('/user/logout');
+}
+
+function* login(action) {
     try {
-        // yield call(loginAPI);
-        yield delay(2000);
+        const result = yield call(loginAPI, action.data);
         yield put({
             type: LOG_IN_SUCCESS,
+            data: result.data,
         });
     } catch (error) {
         yield put({
@@ -31,10 +43,9 @@ function* login() {
     }
 }
 
-function* signUp() {
+function* signUp(action) {
     try {
-        yield call(signUpAPI);
-        yield delay(2000);
+        yield call(signUpAPI, action.data);
         // throw new Error('Error!');
         yield put({
             type: SIGN_UP_SUCCESS,
@@ -47,6 +58,19 @@ function* signUp() {
     }
 }
 
+function* logout() {
+    try {
+        yield call(logoutAPI);
+        yield put({
+            type: LOG_OUT_SUCCESS,
+        });
+    } catch (error) {
+        yield put({
+            type: LOG_OUT_FAILURE,
+        });
+    }
+}
+
 function* watchLogin() {
     yield takeEvery(LOG_IN_REQUEST, login);
 }
@@ -55,6 +79,10 @@ function* watchSignUp() {
     yield takeEvery(SIGN_UP_REQUEST, signUp);
 }
 
+function* watchLogout() {
+    yield takeLatest(LOG_OUT_REQUEST, logout);
+}
+
 export default function* userSaga() {
-    yield all([fork(watchLogin), fork(watchSignUp)]);
+    yield all([fork(watchLogin), fork(watchSignUp), fork(watchLogout)]);
 }

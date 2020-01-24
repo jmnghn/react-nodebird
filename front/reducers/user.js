@@ -83,7 +83,7 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 isLoggingIn: false,
                 isLoggedIn: true,
-                me: dummyUser,
+                me: action.data,
                 isLoading: false,
             };
         }
@@ -115,7 +115,7 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 isSigninUp: false,
                 isSignedUp: true,
-                me: dummyUser,
+                me: action.data,
             };
         }
         case SIGN_UP_FAILURE: {
