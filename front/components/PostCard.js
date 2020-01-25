@@ -55,14 +55,27 @@ const PostCard = ({ post }) => {
                 extra={<Button>팔로우</Button>}
             >
                 <Card.Meta
-                    avatar={<Avatar>{post.User.nickname[0]}</Avatar>}
+                    avatar={
+                        <Avatar>
+                            <Link
+                                href={{ pathname: '/user', query: { id: post.User.id } }}
+                                as={`/user/${post.User.id}`}
+                            >
+                                <a>{post.User.nickname[0]}</a>
+                            </Link>
+                        </Avatar>
+                    }
                     title={post.User.nickname}
                     description={
                         <div>
                             {post.content.split(/(#[^\s]+)/g).map((v) => {
                                 if (v.match(/#[^\s]+/g)) {
                                     return (
-                                        <Link href={`/hashtag/${v.replace('#', '')}`} key={v}>
+                                        <Link
+                                            href={{ pathname: '/hashtag/', query: { tag: `${v.slice(1)}` } }}
+                                            as={`/hashtag/${v.slice(1)}`}
+                                            key={v}
+                                        >
                                             <a>{v}</a>
                                         </Link>
                                     );
@@ -91,7 +104,14 @@ const PostCard = ({ post }) => {
                             <li>
                                 <Comment
                                     author={item.User.nickname}
-                                    avatar={<Avatar>{item.User.nickname[0]}</Avatar>}
+                                    avatar={
+                                        <Link
+                                            href={{ pathname: '/user', query: { id: post.User.id } }}
+                                            as={`/user/${post.User.id}`}
+                                        >
+                                            <a>{post.User.nickname[0]}</a>
+                                        </Link>
+                                    }
                                     content={item.content}
                                 />
                             </li>

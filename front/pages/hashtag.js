@@ -5,7 +5,6 @@ import { LOAD_HASHTAG_POSTS_REQUEST } from '../reducers/post';
 import PostCard from '../components/PostCard';
 
 const Hashtag = ({ tag }) => {
-    console.log(tag);
     const dispatch = useDispatch();
     const { mainPosts } = useSelector((state) => state.post);
 
@@ -18,7 +17,6 @@ const Hashtag = ({ tag }) => {
 
     return (
         <div>
-            {tag}
             {mainPosts.map((c) => (
                 <PostCard key={+c.createdAt} post={c} />
             ))}
@@ -27,7 +25,7 @@ const Hashtag = ({ tag }) => {
 };
 
 Hashtag.propTypes = {
-    tag: PropTypes.number.isRequired,
+    tag: PropTypes.string.isRequired,
 };
 
 Hashtag.getInitialProps = async (context) => {

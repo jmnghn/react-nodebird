@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Card, Avatar } from 'antd';
 import { LOAD_USER_POSTS_REQUEST } from '../reducers/post';
 import { LOAD_USER_REQUEST } from '../reducers/user';
+import PostCard from '../components/PostCard';
 
 const User = ({ id }) => {
     const dispatch = useDispatch();
@@ -23,7 +24,6 @@ const User = ({ id }) => {
 
     return (
         <div>
-            {id}
             {userInfo ? (
                 <Card
                     actions={[
