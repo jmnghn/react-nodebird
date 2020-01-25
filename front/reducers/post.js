@@ -122,6 +122,17 @@ const reducer = (state = initialState, action) => {
                 addCommentErrorReason: action.error,
             };
         }
+        case LOAD_COMMENTS_SUCCESS: {
+            const postIndex = state.mainPosts.findIndex((v) => v.id === action.data.postId);
+            const post = state.mainPosts[postIndex];
+            const Comments = action.data.comments;
+            const mainPosts = [...state.mainPosts];
+            mainPosts[postIndex] = { ...post, Comments };
+            return {
+                ...state,
+                mainPosts,
+            };
+        }
         case LOAD_MAIN_POSTS_REQUEST:
         case LOAD_HASHTAG_POSTS_REQUEST:
         case LOAD_USER_POSTS_REQUEST: {

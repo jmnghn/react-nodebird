@@ -89,7 +89,6 @@ function* watchLogout() {
 }
 
 function loadUserAPI(userId) {
-    console.log('loadUserAPI', userId);
     return axios.get(userId ? `/user/${userId}` : `/user/`, {
         withCredentials: true,
     });
