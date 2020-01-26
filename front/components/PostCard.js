@@ -3,7 +3,13 @@ import { Card, Icon, Button, Avatar, Input, Form, List, Comment } from 'antd';
 import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
 import Link from 'next/link';
-import { ADD_COMMENT_REQUEST, LOAD_COMMENTS_REQUEST } from '../reducers/post';
+import {
+    ADD_COMMENT_REQUEST,
+    LOAD_COMMENTS_REQUEST,
+    LIKE_POST_REQUEST,
+    UNLIKE_POST_REQUEST,
+    RETWEET_REQUEST,
+} from '../reducers/post';
 import PostImages from './PostImages';
 
 const PostCard = ({ post }) => {
@@ -12,6 +18,8 @@ const PostCard = ({ post }) => {
     const { me } = useSelector((state) => state.user);
     const { commentAdded, isAddingComment } = useSelector((state) => state.post);
     const dispatch = useDispatch();
+
+    const liked = me && post.Likers && post.Likers.find((v) => v.id === me.id);
 
     const onToggleComment = useCallback(() => {
         setCommentFormOpened((prev) => !prev);
@@ -49,14 +57,47 @@ const PostCard = ({ post }) => {
         setCommentText(e.target.value);
     });
 
+    const onToggleLike = useCallback(() => {
+        if (!me) {
+            return alert('로그인이 필요합니다.');
+        }
+        if (liked) {
+            dispatch({
+                type: UNLIKE_POST_REQUEST,
+                data: post.id,
+            });
+        } else {
+            dispatch({
+                type: LIKE_POST_REQUEST,
+                data: post.id,
+            });
+        }
+    }, [me && me.id, post && post.id, liked]);
+
+    const onRetweet = useCallback(() => {
+        if (!me) {
+            return alert('로그인이 필요합니다.');
+        }
+        return dispatch({
+            type: RETWEET_REQUEST,
+            data: post.id,
+        });
+    }, [me && me.id, post.id]);
+
     return (
         <div>
             <Card
                 // key={post.id}
                 cover={post.Images[0] && <PostImages images={post.Images} />}
                 actions={[
-                    <Icon type="retweet" key="retweet" />,
-                    <Icon type="heart" key="heart" />,
+                    <Icon type="retweet" key="retweet" onClick={onRetweet} />,
+                    <Icon
+                        type="heart"
+                        key="heart"
+                        theme={liked ? 'twoTone' : 'outlined'}
+                        twoToneColor={'orange'}
+                        onClick={onToggleLike}
+                    />,
                     <Icon type="message" key="message" onClick={onToggleComment} />,
                     <Icon type="ellipsis" key="ellipsis" />,
                 ]}

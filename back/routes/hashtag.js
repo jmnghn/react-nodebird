@@ -19,6 +19,12 @@ router.get('/:tag', async (req, res, next) => {
                 {
                     model: db.Image,
                 },
+                {
+                    model: db.User,
+                    through: 'Like',
+                    as: 'Likers',
+                    attributes: ['id'],
+                },
             ],
         });
         res.json(posts);
