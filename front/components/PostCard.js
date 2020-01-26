@@ -138,7 +138,7 @@ const PostCard = ({ post }) => {
                         <Card.Meta
                             avatar={
                                 <Link
-                                    href={{ pathname: '/user', query: { id: post.Retweet.User.id } }}
+                                    href={{ pathname: '/user/', query: { id: post.Retweet.User.id } }}
                                     as={`/user/${post.Retweet.User.id}`}
                                 >
                                     <a>

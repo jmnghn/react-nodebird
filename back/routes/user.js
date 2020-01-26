@@ -6,7 +6,7 @@ const { isLoggedIn } = require('./middleware');
 
 const router = express.Router();
 
-router.get('/', isLoggedIn, (req, res) => {
+router.get('/', isLoggedIn, async (req, res) => {
     const user = Object.assign({}, req.user.toJSON());
     delete user.password;
     console.log(user);
@@ -62,7 +62,6 @@ router.get('/:id', async (req, res, next) => {
             attributes: ['id', 'nickname'],
         });
         const jsonUser = user.toJSON();
-        console.dir('LOAD_USER_REQUEST', jsonUser);
         jsonUser.Posts = jsonUser.Posts ? jsonUser.Posts.length : 0;
         jsonUser.Followings = jsonUser.Followings ? jsonUser.Followings.length : 0;
         jsonUser.Followers = jsonUser.Followers ? jsonUser.Followers.length : 0;
@@ -125,8 +124,9 @@ router.post('/login', (req, res, next) => {
 router.get('/:id/followings', isLoggedIn, async (req, res, next) => {
     try {
         const user = await db.User.findOne({
-            where: { id: parseInt(req.params.id, 10) },
+            where: { id: parseInt(req.params.id, 10) || (req.user && req.user.id) },
         });
+        console.log(user);
         const followings = await user.getFollowings({
             attributes: ['id', 'nickname'],
         });
@@ -140,7 +140,7 @@ router.get('/:id/followings', isLoggedIn, async (req, res, next) => {
 router.get('/:id/followers', isLoggedIn, async (req, res, next) => {
     try {
         const user = await db.User.findOne({
-            where: { id: parseInt(req.params.id, 10) },
+            where: { id: parseInt(req.params.id, 10) || (req.user && req.user.id) },
         });
         const followers = await user.getFollowers({
             attributes: ['id', 'nickname'],
@@ -153,9 +153,7 @@ router.get('/:id/followers', isLoggedIn, async (req, res, next) => {
 });
 router.delete('/:id/follower', isLoggedIn, async (req, res, next) => {
     try {
-        const me = await db.User.findOne({
-            where: { id: req.user.id },
-        });
+        const me = await db.User.findOne({ id: parseInt(req.params.id, 10) || (req.user && req.user.id) });
         await me.removeFollower(req.params.id);
         res.send(req.params.id);
     } catch (error) {
@@ -191,7 +189,7 @@ router.get('/:id/posts', async (req, res, next) => {
     try {
         const posts = await db.Post.findAll({
             where: {
-                UserId: parseInt(req.params.id, 10),
+                UserId: parseInt(req.params.id, 10) || (req.user && req.user.id),
             },
             include: [
                 {
