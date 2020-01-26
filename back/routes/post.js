@@ -6,7 +6,21 @@ const { isLoggedIn } = require('./middleware');
 
 const router = express.Router();
 
-router.post('/', isLoggedIn, async (req, res, next) => {
+const upload = multer({
+    storage: multer.diskStorage({
+        destination(req, file, done) {
+            done(null, 'uploads');
+        },
+        filename(req, file, done) {
+            const ext = path.basename(file.originalname);
+            const basename = path.basename(file.originalname, ext);
+            done(null, basename + new Date().valueOf() + ext);
+        },
+    }),
+    limits: { fileSize: 20 * 1024 * 1024 },
+});
+
+router.post('/', isLoggedIn, upload.none(), async (req, res, next) => {
     try {
         const hashtags = req.body.content.match(/#[^\s]+/g);
         const newPost = await db.Post.create({
@@ -24,6 +38,21 @@ router.post('/', isLoggedIn, async (req, res, next) => {
             console.log(result);
             await newPost.addHashtags(result.map((r) => r[0]));
         }
+        if (req.body.image) {
+            if (Array.isArray(req.body.image)) {
+                // image: [주소1, 주소2]
+                const images = await Promise.all(
+                    req.body.image.map((image) => {
+                        return db.Image.create({ src: image });
+                    }),
+                );
+                await newPost.addImages(images);
+            } else {
+                // image: '주소1'
+                const image = await db.Image.create({ src: req.body.image });
+                await newPost.addImage(image);
+            }
+        }
         // const User = await newPost.getUser();
         // newPost.User = User;
         // res.json(newPost);
@@ -33,6 +62,9 @@ router.post('/', isLoggedIn, async (req, res, next) => {
                 {
                     model: db.User,
                 },
+                {
+                    model: db.Image,
+                },
             ],
         });
         res.json(fullPost);
@@ -40,20 +72,6 @@ router.post('/', isLoggedIn, async (req, res, next) => {
         console.error(error);
         next(e);
     }
-});
-
-const upload = multer({
-    storage: multer.diskStorage({
-        destination(req, file, done) {
-            done(null, 'uploads');
-        },
-        filename(req, file, done) {
-            const ext = path.basename(file.originalname);
-            const basename = path.basename(file.originalname, ext);
-            done(null, basename + new Date().valueOf() + ext);
-        },
-    }),
-    limits: { fileSize: 20 * 1024 * 1024 },
 });
 
 // POST /post/images

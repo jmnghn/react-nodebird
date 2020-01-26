@@ -16,6 +16,9 @@ router.get('/:tag', async (req, res, next) => {
                 {
                     model: db.User,
                 },
+                {
+                    model: db.Image,
+                },
             ],
         });
         res.json(posts);

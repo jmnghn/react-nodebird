@@ -22,14 +22,17 @@ const PostForm = () => {
                 alert('게시글을 작성하세요');
                 return;
             }
+            const formData = new FormData();
+            imagePaths.forEach((v, i) => {
+                formData.append('image', v);
+            });
+            formData.append('content', text);
             dispatch({
                 type: ADD_POST_REQUEST,
-                data: {
-                    content: text.trim(),
-                },
+                data: formData,
             });
         },
-        [text],
+        [text, imagePaths],
     );
 
     const onChangeText = useCallback((e) => {
