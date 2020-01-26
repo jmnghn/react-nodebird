@@ -1,12 +1,3 @@
-const dummyUser = {
-    nickname: 'Redux!',
-    Post: [],
-    Followings: [],
-    Followers: [],
-    signUpData: {},
-    id: 1,
-};
-
 export const initialState = {
     isLoggingOut: false, // 로그아웃 시도중
     isLoggingIn: false, // 로그인 시도중
@@ -18,6 +9,8 @@ export const initialState = {
     followingList: [], // 팔로잉 리스트
     followerList: [], // 팔로워 리스트
     userInfo: null, // 남의 정보
+    isEditingNickname: false,
+    editNicknameErrorReason: '',
 };
 
 export const SIGN_UP_REQUEST = 'SIGN_UP_REQUEST';
@@ -59,6 +52,10 @@ export const REMOVE_FOLLOWER_FAILURE = 'REMOVE_FOLLOWER_FAILURE';
 export const ADD_POST_TO_ME = 'ADD_POST_TO_ME';
 
 export const LOAD_USER_POSTS_REQUEST = 'LOAD_USER_POSTS_REQUEST';
+
+export const EDIT_NICKNAME_REQUEST = 'EDIT_NICKNAME_REQUEST';
+export const EDIT_NICKNAME_SUCCESS = 'EDIT_NICKNAME_SUCCESS';
+export const EDIT_NICKNAME_FAILURE = 'EDIT_NICKNAME_FAILURE';
 
 export const loginRequestAction = (data) => ({
     type: LOG_IN_REQUEST,
@@ -253,6 +250,30 @@ const reducer = (state = initialState, action) => {
         case REMOVE_FOLLOWER_FAILURE: {
             return {
                 ...state,
+            };
+        }
+        case EDIT_NICKNAME_REQUEST: {
+            return {
+                ...state,
+                isEditingNickname: true,
+                editNicknameErrorReason: '',
+            };
+        }
+        case EDIT_NICKNAME_SUCCESS: {
+            return {
+                ...state,
+                isEditingNickname: false,
+                me: {
+                    ...state.me,
+                    nickname: action.data,
+                },
+            };
+        }
+        case EDIT_NICKNAME_FAILURE: {
+            return {
+                ...state,
+                isEditingNickname: false,
+                editNicknameErrorReason: action.error,
             };
         }
         default:

@@ -215,5 +215,21 @@ router.get('/:id/posts', async (req, res, next) => {
         next(error);
     }
 });
+router.patch('/nickname', isLoggedIn, async (req, res, next) => {
+    try {
+        await db.User.update(
+            {
+                nickname: req.body.nickname,
+            },
+            {
+                where: { id: req.user.id },
+            },
+        );
+        res.send(req.body.nickname);
+    } catch (error) {
+        console.log(error);
+        next(error);
+    }
+});
 
 module.exports = router;

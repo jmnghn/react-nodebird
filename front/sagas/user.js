@@ -28,6 +28,9 @@ import {
     REMOVE_FOLLOWER_REQUEST,
     REMOVE_FOLLOWER_SUCCESS,
     REMOVE_FOLLOWER_FAILURE,
+    EDIT_NICKNAME_REQUEST,
+    EDIT_NICKNAME_SUCCESS,
+    EDIT_NICKNAME_FAILURE,
 } from '../reducers/user';
 
 function loginAPI(loginData) {
@@ -249,6 +252,34 @@ function* watchRemoveFollower() {
     yield takeEvery(REMOVE_FOLLOWER_REQUEST, removeFollower);
 }
 
+function editNicknameAPI(nickname) {
+    return axios.patch(
+        `/user/nickname`,
+        { nickname },
+        {
+            withCredentials: true,
+        },
+    );
+}
+function* editNickname(action) {
+    try {
+        const result = yield call(editNicknameAPI, action.data);
+        yield put({
+            type: EDIT_NICKNAME_SUCCESS,
+            data: result.data,
+        });
+    } catch (error) {
+        console.log(error);
+        yield put({
+            type: EDIT_NICKNAME_FAILURE,
+            error: error,
+        });
+    }
+}
+function* watchEditNickname() {
+    yield takeEvery(EDIT_NICKNAME_REQUEST, editNickname);
+}
+
 export default function* userSaga() {
     yield all([
         fork(watchLogin),
@@ -260,5 +291,6 @@ export default function* userSaga() {
         fork(watchLoadFollowers),
         fork(watchLoadFollowings),
         fork(watchRemoveFollower),
+        fork(watchEditNickname),
     ]);
 }
