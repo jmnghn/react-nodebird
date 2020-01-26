@@ -65,6 +65,25 @@ router.post('/', isLoggedIn, upload.none(), async (req, res, next) => {
                 {
                     model: db.Image,
                 },
+                {
+                    model: db.User,
+                    through: 'Like',
+                    as: 'Likers',
+                    attributes: ['id'],
+                },
+                {
+                    model: db.Post,
+                    as: 'Retweet',
+                    include: [
+                        {
+                            model: db.User,
+                            attributes: ['id', 'nickname'],
+                        },
+                        {
+                            model: db.Image,
+                        },
+                    ],
+                },
             ],
         });
         res.json(fullPost);
@@ -172,11 +191,19 @@ router.delete('/:id/like', isLoggedIn, async (req, res, next) => {
 
 router.post('/:id/retweet', isLoggedIn, async (req, res, next) => {
     try {
-        const post = await db.Post.findOne({ where: { id: req.params.id } });
+        const post = await db.Post.findOne({
+            where: { id: req.params.id },
+            include: [
+                {
+                    model: db.Post,
+                    as: 'Retweet',
+                },
+            ],
+        });
         if (!post) {
             return res.status(404).send('포스트가 존재하지 않습니다.');
         }
-        if (req.user.id === post.UserId) {
+        if (req.user.id === post.UserId || (post.Retweet && post.Retweet.UserId === req.user.id)) {
             return res.status(403).send('자신의 글은 리트윗할 수 없습니다.');
         }
         const retweetTargetId = post.RetweetId || post.id;
@@ -200,6 +227,9 @@ router.post('/:id/retweet', isLoggedIn, async (req, res, next) => {
                 {
                     model: db.User,
                     attributes: ['id', 'nickname'],
+                },
+                {
+                    model: db.Image,
                 },
                 {
                     model: db.Post,

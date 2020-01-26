@@ -33,6 +33,8 @@ import {
     RETWEET_FAILURE,
 } from '../reducers/post';
 
+import { ADD_POST_TO_ME } from '../reducers/user';
+
 function addPostAPI(postData) {
     return axios.post('/post', postData, {
         withCredentials: true,
@@ -44,6 +46,10 @@ function* addPost(action) {
         yield put({
             type: ADD_POST_SUCCESS,
             data: result.data,
+        });
+        yield put({
+            type: ADD_POST_TO_ME,
+            data: result.data.id,
         });
     } catch (error) {
         console.log(error);
@@ -285,7 +291,8 @@ function* retweet(action) {
             data: result.data,
         });
     } catch (error) {
-        console.log(error);
+        console.dir(error);
+        alert(error.response.data);
         yield put({
             type: RETWEET_FAILURE,
             error: error,

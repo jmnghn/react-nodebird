@@ -62,6 +62,7 @@ router.get('/:id', async (req, res, next) => {
             attributes: ['id', 'nickname'],
         });
         const jsonUser = user.toJSON();
+        console.dir('LOAD_USER_REQUEST', jsonUser);
         jsonUser.Posts = jsonUser.Posts ? jsonUser.Posts.length : 0;
         jsonUser.Followings = jsonUser.Followings ? jsonUser.Followings.length : 0;
         jsonUser.Followers = jsonUser.Followers ? jsonUser.Followers.length : 0;
@@ -119,9 +120,73 @@ router.post('/login', (req, res, next) => {
         });
     })(req, res, next);
 });
-router.get('/:id/follow', (req, res) => {});
-router.post('/:id/follow', (req, res) => {});
-router.delete('/:id/follow', (req, res) => {});
+
+// LOAD_FOLLOWINGS_REQUEST, GET /user/:id/followings
+router.get('/:id/followings', isLoggedIn, async (req, res, next) => {
+    try {
+        const user = await db.User.findOne({
+            where: { id: parseInt(req.params.id, 10) },
+        });
+        const followings = await user.getFollowings({
+            attributes: ['id', 'nickname'],
+        });
+        res.json(followings);
+    } catch (error) {
+        console.log(error);
+        next(error);
+    }
+});
+// LOAD_FOLLOWERS_REQUEST, GET /user/:id/followers
+router.get('/:id/followers', isLoggedIn, async (req, res, next) => {
+    try {
+        const user = await db.User.findOne({
+            where: { id: parseInt(req.params.id, 10) },
+        });
+        const followers = await user.getFollowers({
+            attributes: ['id', 'nickname'],
+        });
+        res.json(followers);
+    } catch (error) {
+        console.log(error);
+        next(error);
+    }
+});
+router.delete('/:id/follower', isLoggedIn, async (req, res, next) => {
+    try {
+        const me = await db.User.findOne({
+            where: { id: req.user.id },
+        });
+        await me.removeFollower(req.params.id);
+        res.send(req.params.id);
+    } catch (error) {
+        console.log(error);
+        next(error);
+    }
+});
+router.post('/:id/follow', isLoggedIn, async (req, res, next) => {
+    try {
+        const me = await db.User.findOne({
+            where: { id: req.user.id },
+        });
+        await me.addFollowing(req.params.id);
+        res.send(req.params.id);
+    } catch (error) {
+        console.log(error);
+        next(error);
+    }
+});
+router.delete('/:id/follow', isLoggedIn, async (req, res, next) => {
+    try {
+        const me = await db.User.findOne({
+            where: { id: req.user.id },
+        });
+        await me.removeFollowing(req.params.id);
+        res.send(req.params.id);
+    } catch (error) {
+        console.log(error);
+        next(error);
+    }
+});
 router.get('/:id/posts', async (req, res, next) => {
     try {
         const posts = await db.Post.findAll({

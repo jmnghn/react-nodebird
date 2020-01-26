@@ -13,9 +13,21 @@ import {
     LOAD_USER_REQUEST,
     LOAD_USER_SUCCESS,
     LOAD_USER_FAILURE,
-    LOAD_HASHTAG_POSTS_REQUEST,
-    LOAD_HASHTAG_POSTS_SUCCESS,
-    LOAD_HASHTAG_POSTS_FAILURE,
+    FOLLOW_USER_REQUEST,
+    FOLLOW_USER_SUCCESS,
+    FOLLOW_USER_FAILURE,
+    UNFOLLOW_USER_REQUEST,
+    UNFOLLOW_USER_SUCCESS,
+    UNFOLLOW_USER_FAILURE,
+    LOAD_FOLLOWERS_REQUEST,
+    LOAD_FOLLOWERS_SUCCESS,
+    LOAD_FOLLOWERS_FAILURE,
+    LOAD_FOLLOWINGS_REQUEST,
+    LOAD_FOLLOWINGS_SUCCESS,
+    LOAD_FOLLOWINGS_FAILURE,
+    REMOVE_FOLLOWER_REQUEST,
+    REMOVE_FOLLOWER_SUCCESS,
+    REMOVE_FOLLOWER_FAILURE,
 } from '../reducers/user';
 
 function loginAPI(loginData) {
@@ -113,6 +125,140 @@ function* watchLoadUser() {
     yield takeEvery(LOAD_USER_REQUEST, loadUser);
 }
 
+function followUserAPI(userId) {
+    return axios.post(
+        `/user/${userId}/follow`,
+        {},
+        {
+            withCredentials: true,
+        },
+    );
+}
+function* followUser(action) {
+    try {
+        const result = yield call(followUserAPI, action.data);
+        yield put({
+            type: FOLLOW_USER_SUCCESS,
+            data: result.data,
+        });
+    } catch (error) {
+        console.log(error);
+        yield put({
+            type: FOLLOW_USER_FAILURE,
+            error: error,
+        });
+    }
+}
+function* watchFollowUser() {
+    yield takeEvery(FOLLOW_USER_REQUEST, followUser);
+}
+
+function unFollowUserAPI(userId) {
+    return axios.delete(`/user/${userId}/follow`, {
+        withCredentials: true,
+    });
+}
+function* unFollowUser(action) {
+    try {
+        const result = yield call(unFollowUserAPI, action.data);
+        yield put({
+            type: UNFOLLOW_USER_SUCCESS,
+            data: result.data,
+        });
+    } catch (error) {
+        console.log(error);
+        yield put({
+            type: UNFOLLOW_USER_FAILURE,
+            error: error,
+        });
+    }
+}
+function* watchUnFollowUser() {
+    yield takeEvery(UNFOLLOW_USER_REQUEST, unFollowUser);
+}
+
+function loadFollowersAPI(userId) {
+    return axios.get(`/user/${userId}/followers`, {
+        withCredentials: true,
+    });
+}
+function* loadFollowers(action) {
+    try {
+        const result = yield call(loadFollowersAPI, action.data);
+        yield put({
+            type: LOAD_FOLLOWERS_SUCCESS,
+            data: result.data,
+        });
+    } catch (error) {
+        console.log(error);
+        yield put({
+            type: LOAD_FOLLOWERS_FAILURE,
+            error: error,
+        });
+    }
+}
+function* watchLoadFollowers() {
+    yield takeEvery(LOAD_FOLLOWERS_REQUEST, loadFollowers);
+}
+
+function loadFollowingsAPI(userId) {
+    return axios.get(`/user/${userId}/followings`, {
+        withCredentials: true,
+    });
+}
+function* loadFollowings(action) {
+    try {
+        const result = yield call(loadFollowingsAPI, action.data);
+        yield put({
+            type: LOAD_FOLLOWINGS_SUCCESS,
+            data: result.data,
+        });
+    } catch (error) {
+        console.log(error);
+        yield put({
+            type: LOAD_FOLLOWINGS_FAILURE,
+            error: error,
+        });
+    }
+}
+function* watchLoadFollowings() {
+    yield takeEvery(LOAD_FOLLOWINGS_REQUEST, loadFollowings);
+}
+
+function removeFollowerAPI(userId) {
+    return axios.delete(`/user/${userId}/follower`, {
+        withCredentials: true,
+    });
+}
+function* removeFollower(action) {
+    try {
+        const result = yield call(removeFollowerAPI, action.data);
+        yield put({
+            type: REMOVE_FOLLOWER_SUCCESS,
+            data: result.data,
+        });
+    } catch (error) {
+        console.log(error);
+        yield put({
+            type: REMOVE_FOLLOWER_FAILURE,
+            error: error,
+        });
+    }
+}
+function* watchRemoveFollower() {
+    yield takeEvery(REMOVE_FOLLOWER_REQUEST, removeFollower);
+}
+
 export default function* userSaga() {
-    yield all([fork(watchLogin), fork(watchSignUp), fork(watchLogout), fork(watchLoadUser)]);
+    yield all([
+        fork(watchLogin),
+        fork(watchSignUp),
+        fork(watchLogout),
+        fork(watchLoadUser),
+        fork(watchFollowUser),
+        fork(watchUnFollowUser),
+        fork(watchLoadFollowers),
+        fork(watchLoadFollowings),
+        fork(watchRemoveFollower),
+    ]);
 }
