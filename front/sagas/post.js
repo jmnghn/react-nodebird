@@ -19,6 +19,9 @@ import {
     LOAD_COMMENTS_REQUEST,
     LOAD_COMMENTS_SUCCESS,
     LOAD_COMMENTS_FAILURE,
+    UPLOAD_IMAGES_REQUEST,
+    UPLOAD_IMAGES_SUCCESS,
+    UPLOAD_IMAGES_FAILURE,
 } from '../reducers/post';
 
 function addPostAPI(postData) {
@@ -169,6 +172,32 @@ function* watchLoadUserPosts() {
     yield takeLatest(LOAD_USER_POSTS_REQUEST, loadUserPosts);
 }
 
+// UPLOAD IMAGES
+function uploadImagesAPI(formData) {
+    return axios.post(`/post/images`, formData, {
+        withCredentials: true,
+    });
+}
+function* uploadImages(action) {
+    try {
+        const result = yield call(uploadImagesAPI, action.data);
+        console.log(result);
+        yield put({
+            type: UPLOAD_IMAGES_SUCCESS,
+            data: result.data,
+        });
+    } catch (error) {
+        console.log(error);
+        yield put({
+            type: UPLOAD_IMAGES_FAILURE,
+            error: error,
+        });
+    }
+}
+function* watchUploadImages() {
+    yield takeLatest(UPLOAD_IMAGES_REQUEST, uploadImages);
+}
+
 export default function* postSaga() {
     yield all([
         fork(watchAddPost),
@@ -177,5 +206,6 @@ export default function* postSaga() {
         fork(watchLoadComments),
         fork(watchLoadHashtagPosts),
         fork(watchLoadUserPosts),
+        fork(watchUploadImages),
     ]);
 }

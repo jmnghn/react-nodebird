@@ -72,6 +72,23 @@ export const addPost = {
 
 const reducer = (state = initialState, action) => {
     switch (action.type) {
+        case UPLOAD_IMAGES_REQUEST: {
+            return {
+                ...state,
+            };
+        }
+        case UPLOAD_IMAGES_SUCCESS: {
+            console.log('11111');
+            return {
+                ...state,
+                imagePaths: [...state.imagePaths, ...action.data],
+            };
+        }
+        case UPLOAD_IMAGES_FAILURE: {
+            return {
+                ...state,
+            };
+        }
         case ADD_POST_REQUEST: {
             return {
                 ...state,
@@ -154,6 +171,12 @@ const reducer = (state = initialState, action) => {
         case LOAD_USER_POSTS_FAILURE: {
             return {
                 ...state,
+            };
+        }
+        case REMOVE_IMAGE: {
+            return {
+                ...state,
+                imagePaths: state.imagePaths.filter((v, i) => i !== action.index),
             };
         }
         default: {
