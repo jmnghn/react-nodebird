@@ -123,12 +123,15 @@ router.post('/login', (req, res, next) => {
 // LOAD_FOLLOWINGS_REQUEST, GET /user/:id/followings
 router.get('/:id/followings', isLoggedIn, async (req, res, next) => {
     try {
+        console.log('LOAD_FOLLOWINGS_REQUEST', req.query.offset);
         const user = await db.User.findOne({
             where: { id: parseInt(req.params.id, 10) || (req.user && req.user.id) },
         });
         console.log(user);
         const followings = await user.getFollowings({
             attributes: ['id', 'nickname'],
+            limit: parseInt(req.query.limit, 10),
+            offset: parseInt(req.query.offset, 10),
         });
         res.json(followings);
     } catch (error) {
@@ -144,6 +147,8 @@ router.get('/:id/followers', isLoggedIn, async (req, res, next) => {
         });
         const followers = await user.getFollowers({
             attributes: ['id', 'nickname'],
+            limit: parseInt(req.query.limit, 10),
+            offset: parseInt(req.query.offset, 10),
         });
         res.json(followers);
     } catch (error) {
