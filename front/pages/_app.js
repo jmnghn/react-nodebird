@@ -8,14 +8,13 @@ import withRedux from 'next-redux-wrapper';
 import withReduxSaga from 'next-redux-saga';
 import axios from 'axios';
 import Helmet from 'react-helmet';
-import { Container } from 'next/app';
 import AppLayout from '../components/AppLayout';
 import reducer from '../reducers';
 import { LOAD_USER_REQUEST } from '../reducers/user';
 
 const NodeBird = ({ Component, store, pageProps }) => {
     return (
-        <Container>
+        <>
             <Provider store={store}>
                 <Helmet
                     title="NodeBrid"
@@ -51,7 +50,7 @@ const NodeBird = ({ Component, store, pageProps }) => {
                     <Component {...pageProps} />
                 </AppLayout>
             </Provider>
-        </Container>
+        </>
     );
 };
 

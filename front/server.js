@@ -1,4 +1,5 @@
 const express = require('express');
+const path = require('path');
 const next = require('next');
 const morgan = require('morgan');
 const cookieParser = require('cookie-parser');
@@ -16,6 +17,7 @@ app.prepare().then(() => {
     const server = express();
 
     server.use(morgan('dev'));
+    server.use('/', express.static(path.join(__dirname, 'public')));
     server.use(express.json());
     server.use(express.urlencoded({ extended: true }));
     server.use(cookieParser(process.env.COOKIE_SECRET));

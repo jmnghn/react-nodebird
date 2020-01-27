@@ -19,12 +19,12 @@ const AppLayout = ({ children }) => {
         <div>
             <Menu mode="horizontal">
                 <Menu.Item key="home">
-                    <Link href="/">
+                    <Link prefetch href="/">
                         <a>노드버드</a>
                     </Link>
                 </Menu.Item>
                 <Menu.Item key="profile">
-                    <Link href="/profile">
+                    <Link prefetch href="/profile">
                         <a>프로필</a>
                     </Link>
                 </Menu.Item>
