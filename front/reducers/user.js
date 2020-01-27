@@ -85,7 +85,7 @@ const reducer = (state = initialState, action) => {
             }
             case LOG_IN_SUCCESS: {
                 draft.isLoggingIn = false;
-                darft.me = action.data;
+                draft.me = action.data;
                 draft.isLoading = false;
                 break;
             }
@@ -177,7 +177,7 @@ const reducer = (state = initialState, action) => {
                 break;
             }
             case LOAD_FOLLOWINGS_REQUEST: {
-                darft.hasMoreFollowing = action.offset ? state.hasMoreFolloing : true;
+                draft.hasMoreFollowing = action.offset ? state.hasMoreFolloing : true;
                 break;
             }
             case LOAD_FOLLOWINGS_SUCCESS: {
@@ -215,7 +215,7 @@ const reducer = (state = initialState, action) => {
                 break;
             }
             default:
-                return state;
+                break;
         }
     });
 };
