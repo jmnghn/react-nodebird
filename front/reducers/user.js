@@ -165,7 +165,8 @@ const reducer = (state = initialState, action) => {
                 break;
             }
             case LOAD_FOLLOWERS_REQUEST: {
-                draft.hasMoreFollower = action.offset ? state.hasMoreFollower : true;
+                draft.followerList = !action.offset ? [] : draft.followerList;
+                draft.hasMoreFollower = action.offset ? draft.hasMoreFollower : true;
                 break;
             }
             case LOAD_FOLLOWERS_SUCCESS: {
@@ -177,7 +178,8 @@ const reducer = (state = initialState, action) => {
                 break;
             }
             case LOAD_FOLLOWINGS_REQUEST: {
-                draft.hasMoreFollowing = action.offset ? state.hasMoreFolloing : true;
+                draft.followingList = !action.offset ? [] : draft.followingList;
+                draft.hasMoreFollowing = action.offset ? draft.hasMoreFolloing : true;
                 break;
             }
             case LOAD_FOLLOWINGS_SUCCESS: {
@@ -192,7 +194,7 @@ const reducer = (state = initialState, action) => {
                 break;
             }
             case REMOVE_FOLLOWER_SUCCESS: {
-                const index = state.me.Followers.findIndex((v) => v.id === action.data);
+                const index = draft.me.Followers.findIndex((v) => v.id === action.data);
                 draft.me.Followers.splice(index, 1);
                 draft.followerList.splice(index, 1);
             }

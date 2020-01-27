@@ -3,6 +3,7 @@ import { Card, Icon, Button, Avatar, Input, Form, List, Comment, Popover } from 
 import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
 import Link from 'next/link';
+import styled from 'styled-components';
 import PostImages from './PostImages';
 import PostCardContent from './PostCardContent';
 import {
@@ -14,6 +15,10 @@ import {
     REMOVE_POST_REQUEST,
 } from '../reducers/post';
 import { FOLLOW_USER_REQUEST, UNFOLLOW_USER_REQUEST } from '../reducers/user';
+
+const CardWrapper = styled.div`
+    margin-bottom: 20px;
+`;
 
 const PostCard = ({ post }) => {
     const [commentFormOpened, setCommentFormOpened] = useState(false);
@@ -115,9 +120,8 @@ const PostCard = ({ post }) => {
     });
 
     return (
-        <div>
+        <CardWrapper>
             <Card
-                // key={post.id}
                 cover={post.Images[0] && <PostImages images={post.Images} />}
                 actions={[
                     <Icon type="retweet" key="retweet" onClick={onRetweet} />,
@@ -226,7 +230,7 @@ const PostCard = ({ post }) => {
                     />
                 </>
             )}
-        </div>
+        </CardWrapper>
     );
 };
 

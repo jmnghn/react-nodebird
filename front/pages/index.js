@@ -16,7 +16,6 @@ const Home = () => {
         if (window.scrollY + document.documentElement.clientHeight > document.documentElement.scrollHeight - 300) {
             if (hasMorePost) {
                 let lastId = mainPosts[mainPosts.length - 1].id;
-                console.log(countRef.current, lastId);
                 if (!countRef.current.includes(lastId)) {
                     dispatch({
                         type: LOAD_MAIN_POSTS_REQUEST,
