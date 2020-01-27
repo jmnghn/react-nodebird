@@ -35,11 +35,15 @@ const Signup = () => {
 
     const dispatch = useDispatch();
 
-    useEffect(() => {
-        if (isSignedUp) {
-            Router.push('/');
-        }
-    }, [isSignedUp]);
+    // useEffect(() => {
+    //     if (isSignedUp) {
+    //         Router.push('/');
+    //     }
+    // }, [isSignedUp]);
+
+    if (me) {
+        return null;
+    }
 
     const onSubmit = useCallback(
         (e) => {

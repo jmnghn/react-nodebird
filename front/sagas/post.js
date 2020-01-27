@@ -31,9 +31,12 @@ import {
     RETWEET_REQUEST,
     RETWEET_SUCCESS,
     RETWEET_FAILURE,
+    REMOVE_POST_REQUEST,
+    REMOVE_POST_SUCCESS,
+    REMOVE_POST_FAILURE,
 } from '../reducers/post';
 
-import { ADD_POST_TO_ME } from '../reducers/user';
+import { ADD_POST_TO_ME, REMOVE_POST_OF_ME } from '../reducers/user';
 
 function addPostAPI(postData) {
     return axios.post('/post', postData, {
@@ -303,6 +306,36 @@ function* watchRetweet() {
     yield takeLatest(RETWEET_REQUEST, retweet);
 }
 
+function removePostAPI(postId) {
+    return axios.delete(`/post/${postId}`, {
+        withCredentials: true,
+    });
+}
+function* removePost(action) {
+    try {
+        const result = yield call(removePostAPI, action.data);
+        console.log(result);
+        yield put({
+            type: REMOVE_POST_SUCCESS,
+            data: result.data,
+        });
+        yield put({
+            type: REMOVE_POST_OF_ME,
+            data: result.data,
+        });
+    } catch (error) {
+        console.dir(error);
+        alert(error.response.data);
+        yield put({
+            type: REMOVE_POST_FAILURE,
+            error: error,
+        });
+    }
+}
+function* watchRemovePost() {
+    yield takeLatest(REMOVE_POST_REQUEST, removePost);
+}
+
 export default function* postSaga() {
     yield all([
         fork(watchAddPost),
@@ -315,5 +348,6 @@ export default function* postSaga() {
         fork(watchLikePost),
         fork(watchUnLikePost),
         fork(watchRetweet),
+        fork(watchRemovePost),
     ]);
 }

@@ -9,7 +9,7 @@ const router = express.Router();
 router.get('/', isLoggedIn, async (req, res) => {
     const user = Object.assign({}, req.user.toJSON());
     delete user.password;
-    console.log(user);
+    console.log('11111', user);
     return res.json(user);
 });
 // 회원가입
