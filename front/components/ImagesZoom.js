@@ -3,6 +3,7 @@ import { PropTypes } from 'prop-types';
 import Slick from 'react-slick';
 import { Icon } from 'antd';
 import styled from 'styled-components';
+import { backUrl } from '../config/config';
 
 const Overlay = styled.div`
     position: fixed;
@@ -90,7 +91,7 @@ const ImagesZoom = ({ images, onClose }) => {
                         {images.map((v) => {
                             return (
                                 <ImageWrapper>
-                                    <img src={`http://localhost:3065/${v.src}`} />
+                                    <img src={`${backUrl}/${v.src}`} />
                                 </ImageWrapper>
                             );
                         })}
