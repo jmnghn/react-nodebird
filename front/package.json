@@ -7,7 +7,7 @@
         "dev": "ANALYZE='false' nodemon",
         "build": "ANALYZE=true next build",
         "prestart": "npm run build",
-        "start": "NODE_ENV=production next start"
+        "start": "NODE_ENV=production PORT=80 pm2 start server"
     },
     "author": "jngmnghn",
     "license": "ISC",
@@ -25,6 +25,7 @@
         "next": "^9.1.6",
         "next-redux-saga": "^4.1.2",
         "next-redux-wrapper": "^4.0.1",
+        "pm2": "^4.2.3",
         "prop-types": "^15.7.2",
         "react": "^16.12.0",
         "react-dom": "^16.12.0",
