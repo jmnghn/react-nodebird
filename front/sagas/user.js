@@ -46,8 +46,10 @@ function* login(action) {
             data: result.data,
         });
     } catch (error) {
+        console.log(error);
         yield put({
             type: LOG_IN_FAILURE,
+            error: error.response.data,
         });
     }
 }

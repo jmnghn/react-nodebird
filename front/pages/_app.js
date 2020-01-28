@@ -28,8 +28,10 @@ const NodeBird = ({ Component, store, pageProps }) => {
                         },
                         { 'http-equiv': 'X-UA-Compatible', content: 'IE=edge' },
                         { name: 'description', content: 'NodeBird SNS' },
-                        { property: 'og:description', content: 'NodeBird SNS' },
                         { property: 'og:title', content: 'NodeBird' },
+                        { property: 'og:description', content: 'NodeBird SNS' },
+                        { property: 'og:type', content: 'website' },
+                        { property: 'og:image', content: 'http://localhost:3060/favicon.ico' },
                     ]}
                     link={[
                         {

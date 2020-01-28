@@ -4,15 +4,18 @@
     "description": "",
     "main": "index.js",
     "scripts": {
-        "dev": "nodemon",
-        "build": "next build",
-        "start": "next start"
+        "dev": "ANALYZE='false' nodemon",
+        "build": "ANALYZE=true next build",
+        "prestart": "npm run build",
+        "start": "NODE_ENV=production next start"
     },
     "author": "jngmnghn",
     "license": "ISC",
     "dependencies": {
+        "@next/bundle-analyzer": "^9.2.1",
         "antd": "^3.26.5",
         "axios": "^0.19.2",
+        "compression-webpack-plugin": "^3.1.0",
         "cookie-parser": "^1.4.4",
         "dotenv": "^8.2.0",
         "express": "^4.17.1",
