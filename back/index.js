@@ -45,6 +45,10 @@ app.use(
 app.use(passport.initialize()); // expressSession 에 의존도가 있어서 그 하단에서 실행해줘야 한다.
 app.use(passport.session());
 
+app.get('/', (req, res) => {
+    res.send('nodebird back running !!!');
+});
+
 // ROUTERS
 app.use('/api/user', userAPIRouter);
 app.use('/api/post', postAPIRouter);
