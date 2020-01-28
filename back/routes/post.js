@@ -29,7 +29,7 @@ AWS.config.update({
 // });
 
 const upload = multer({
-    storage: multer.multerS3({
+    storage: multerS3({
         s3: new AWS.S3(),
         bucket: 'jngmnghn-nodebird',
         key(req, file, cb) {
