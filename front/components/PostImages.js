@@ -18,7 +18,7 @@ const PostImages = ({ images }) => {
     if (images.length === 1) {
         return (
             <>
-                <img alt="example" src={`${backUrl}/${images[0].src}`} onClick={onZoom} />
+                <img alt="example" src={images[0].src} onClick={onZoom} />
                 {showImagesZoom && <ImagesZoom images={images} onClose={onClose} />}
             </>
         );
@@ -28,8 +28,8 @@ const PostImages = ({ images }) => {
         return (
             <>
                 <div>
-                    <img alt="example" src={`${backUrl}/${images[0].src}`} onClick={onZoom} width="50%" />
-                    <img alt="example" src={`${backUrl}/${images[1].src}`} onClick={onZoom} width="50%" />
+                    <img alt="example" src={images[0].src} onClick={onZoom} width="50%" />
+                    <img alt="example" src={images[1].src} onClick={onZoom} width="50%" />
                 </div>
                 {showImagesZoom && <ImagesZoom images={images} onClose={onClose} />}
             </>
@@ -39,7 +39,7 @@ const PostImages = ({ images }) => {
     return (
         <>
             <div>
-                <img alt="example" src={`${backUrl}/${images[0].src}`} onClick={onZoom} width="50%" />
+                <img alt="example" src={images[0].src} onClick={onZoom} width="50%" />
                 <div style={{ display: 'inline-block', width: '50%', textAlign: 'center', verticalAlign: 'middle' }}>
                     <Icon type="plus" />
                     <br />

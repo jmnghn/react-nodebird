@@ -27,9 +27,7 @@ const Post = ({ id }) => {
                     },
                     {
                         property: 'og:image',
-                        content: singlePost.Images[0] && (
-                            <img src={`http://api.jngmnghn.com/${singlePost.Images[0].src}`} />
-                        ),
+                        content: singlePost.Images[0] ? singlePost.Images[0].src : 'http://jngmnghn.com/favicon.ico',
                     },
                     {
                         property: 'og:url',
@@ -39,7 +37,7 @@ const Post = ({ id }) => {
             />
             <div>{singlePost && singlePost.content}</div>
             <div>{singlePost && singlePost.User.nickname}</div>
-            <div>{singlePost && singlePost.Images[0] && <img src={`${backUrl}/${singlePost.Images[0].src}`} />}</div>
+            <div>{singlePost && singlePost.Images[0] && <img src={singlePost.Images[0].src} />}</div>
         </>
     );
 };
