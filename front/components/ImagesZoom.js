@@ -59,13 +59,16 @@ const IndicatorWrapper = styled.div`
     }
 `;
 
-const ImageWrapper = styled.div`
-    padding: 32;
-    textalign: center;
+export const ImageWrapper = styled.div`
+    padding: 32px;
+    text-align: center;
+    position: relative;
 
     & > img {
         margin: 0 auto;
-        maxheight: 750;
+        max-width: 100%;
+        max-height: 750px;
+        width: none;
     }
 `;
 
@@ -90,8 +93,8 @@ const ImagesZoom = ({ images, onClose }) => {
                     >
                         {images.map((v) => {
                             return (
-                                <ImageWrapper>
-                                    <img src={`${backUrl}/${v.src}`} />
+                                <ImageWrapper key={v.id} style={{ position: 'relative' }}>
+                                    <img src={v.src} />
                                 </ImageWrapper>
                             );
                         })}

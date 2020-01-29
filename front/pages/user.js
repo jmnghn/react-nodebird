@@ -34,6 +34,7 @@ const User = ({ id }) => {
                             {userInfo.Followers.length}
                         </div>,
                     ]}
+                    style={{ marginBottom: '20px' }}
                 >
                     <Card.Meta avatar={<Avatar>{userInfo.nickname[0]}</Avatar>} title={userInfo.nickname} />
                 </Card>

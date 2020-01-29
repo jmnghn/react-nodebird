@@ -40,7 +40,10 @@ const PostImages = ({ images }) => {
         <>
             <div>
                 <img alt="example" src={images[0].src} onClick={onZoom} width="50%" />
-                <div style={{ display: 'inline-block', width: '50%', textAlign: 'center', verticalAlign: 'middle' }}>
+                <div
+                    style={{ display: 'inline-block', width: '50%', textAlign: 'center', verticalAlign: 'middle' }}
+                    onClick={onZoom}
+                >
                     <Icon type="plus" />
                     <br />
                     {images.length - 1}
