@@ -2,22 +2,18 @@ import { Avatar, Card, Button } from 'antd';
 import React, { useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Link from 'next/link';
-import { logoutRequestAction } from '../reducers/user';
+import styled from 'styled-components';
 
 const UserProfile = () => {
     const { me } = useSelector((state) => state.user);
-    const dispatch = useDispatch();
 
-    const onLogout = useCallback(() => {
-        dispatch(logoutRequestAction);
-    }, []);
     return (
         <Card
             actions={[
                 <Link prefetch href="/profile" key="twit">
                     <a>
                         <div>
-                            짹짹
+                            남긴글
                             <br />
                             {me && me.Posts ? me.Posts.length : 0}
                         </div>
@@ -45,7 +41,6 @@ const UserProfile = () => {
         >
             {/* <Card> */}
             <Card.Meta avatar={<Avatar>{me.nickname[0]}</Avatar>} title={me.nickname} />
-            <Button onClick={onLogout}>로그아웃</Button>
         </Card>
     );
 };

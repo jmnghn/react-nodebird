@@ -15,7 +15,7 @@ const Overlay = styled.div`
 `;
 
 const Header = styled.header`
-    height: 44px;
+    height: 46px;
     background: white;
     position: relative;
     padding: 0;
@@ -97,7 +97,9 @@ const ImagesZoom = ({ images, onClose }) => {
                         })}
                     </Slick>
                     <IndicatorWrapper>
-                        <div>
+                        <div
+                            style={{ position: 'absolute', bottom: '70px', left: '0', right: '0', background: 'none' }}
+                        >
                             {currentSlide + 1} / {images.length}
                         </div>
                     </IndicatorWrapper>

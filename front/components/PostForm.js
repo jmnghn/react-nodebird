@@ -1,5 +1,5 @@
 import React, { useCallback, useState, useEffect, useRef } from 'react';
-import { Form, Input, Button } from 'antd';
+import { Form, Input, Button, Icon } from 'antd';
 import { useSelector, useDispatch } from 'react-redux';
 import { ADD_POST_REQUEST, UPLOAD_IMAGES_REQUEST, REMOVE_IMAGE } from '../reducers/post';
 import { backUrl } from '../config/config';
@@ -67,28 +67,34 @@ const PostForm = () => {
     );
 
     return (
-        <Form style={{ margin: '10px 0 20px' }} encType="multipart/form-data" onSubmit={onSubmitForm}>
-            <Input.TextArea
-                maxLength={140}
-                placeholder="어떤 신기한 일이 있었나요?"
-                value={text}
-                onChange={onChangeText}
-            />
+        <Form style={{ margin: '0px 0 30px' }} encType="multipart/form-data" onSubmit={onSubmitForm}>
+            <Input.TextArea maxLength={140} placeholder="😉" value={text} onChange={onChangeText} />
             <div>
                 <input type="file" multiple hidden ref={imageInput} onChange={onChangeImages} />
                 <Button onClick={onClickImageUpload}>이미지 업로드</Button>
                 <Button type="primary" style={{ float: 'right' }} htmlType="submit" loading={isAddingPost}>
-                    짹짹
+                    남기기
                 </Button>
             </div>
             <div>
                 {imagePaths.map((v, i) => {
                     return (
-                        <div key={v} style={{ display: 'inline-block' }}>
-                            <img src={v} style={{ width: '200px' }} alt={v} />
-                            <div>
-                                <Button onClick={onRemoveImage(i)}>제거</Button>
-                            </div>
+                        <div key={v} style={{ display: 'inline-block', marginTop: '16px', position: 'relative' }}>
+                            <img src={v} style={{ width: '124px' }} alt={v} />
+                            {/* <div style={{ textAlign: 'right' }}> */}
+                            <Icon
+                                type="delete"
+                                onClick={onRemoveImage(i)}
+                                style={{
+                                    position: 'absolute',
+                                    right: '8px',
+                                    bottom: '8px',
+                                    fontSize: '21px',
+                                    color: '#ea4d55',
+                                }}
+                            />
+                            {/* <Button onClick={onRemoveImage(i)}>제거</Button> */}
+                            {/* </div> */}
                         </div>
                     );
                 })}

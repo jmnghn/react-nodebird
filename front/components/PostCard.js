@@ -98,16 +98,16 @@ const PostCard = memo(({ post }) => {
     return (
         <CardWrapper>
             <Card
-                cover={post.Images[0] && <PostImages images={post.Images} />}
+                cover={
+                    post.Images[0] ? (
+                        <PostImages images={post.Images} />
+                    ) : (
+                        <img alt="example" src="http://localhost:3060/noimages.jpeg" />
+                    )
+                }
                 actions={[
                     <Icon type="retweet" key="retweet" onClick={onRetweet} />,
-                    <Icon
-                        type="heart"
-                        key="heart"
-                        theme={liked ? 'twoTone' : 'outlined'}
-                        twoToneColor={'orange'}
-                        onClick={onToggleLike}
-                    />,
+                    <Icon type="heart" key="heart" theme={liked ? 'twoTone' : 'outlined'} onClick={onToggleLike} />,
                     <Icon type="message" key="message" onClick={onToggleComment} />,
                     <Popover
                         key="ellipsis"

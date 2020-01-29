@@ -1,12 +1,13 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import Link from 'next/link';
 import Router from 'next/router';
 import PropTypes from 'prop-types';
 import { Col, Input, Menu, Row } from 'antd';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import LoginForm from './LoginForm';
 import UserProfile from './UserProfile';
+import LogOutButton from './LogOutButton';
 
 const AppLayout = ({ children }) => {
     const { me } = useSelector((state) => state.user);
@@ -22,22 +23,27 @@ const AppLayout = ({ children }) => {
                 <Row gutter={8}>
                     <Col xs={24} md={6}>
                         <div>
-                            <Row style={{ marginBottom: '48px' }}>
+                            <Row style={{ marginBottom: '66px' }}>
                                 <Link prefetch href="/">
                                     <a style={{ fontSize: '32px', margin: '8px 8px', display: 'block' }}>😉</a>
                                 </Link>
                             </Row>
-                            <Row>{me ? <UserProfile /> : <LoginForm />}</Row>
+                            <Row style={{ marginBottom: '32px' }}>{me ? <UserProfile /> : <LoginForm />}</Row>
                             {me && (
-                                <Row>
-                                    <Link prefetch href="/profile">
-                                        <a>프로필</a>
-                                    </Link>
-                                </Row>
+                                <>
+                                    <Row style={{ marginTop: '100px', marginBottom: '16px' }}>
+                                        <Link prefetch href="/profile">
+                                            <a style={{ fontSize: '24px' }}>프로필 👀</a>
+                                        </Link>
+                                    </Row>
+                                    <Row>
+                                        <LogOutButton />
+                                    </Row>
+                                </>
                             )}
                         </div>
                     </Col>
-                    <Col xs={24} md={12}>
+                    <Col xs={24} md={12} style={{ marginTop: '12px' }}>
                         {children}
                     </Col>
                     <Col xs={24} md={6}>

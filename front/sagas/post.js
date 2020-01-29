@@ -296,6 +296,9 @@ function* retweet(action) {
             type: RETWEET_SUCCESS,
             data: result.data,
         });
+        yield put({
+            type: LOAD_MAIN_POSTS_REQUEST,
+        });
     } catch (error) {
         console.dir(error);
         alert(error.response.data);
@@ -325,6 +328,9 @@ function* removePost(action) {
         yield put({
             type: REMOVE_POST_OF_ME,
             data: result.data,
+        });
+        yield put({
+            type: LOAD_MAIN_POSTS_REQUEST,
         });
     } catch (error) {
         console.dir(error);
