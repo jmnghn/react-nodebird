@@ -73,7 +73,7 @@ NodeBird.getInitialProps = async (context) => {
     if (ctx.isServer && cookie) {
         axios.defaults.headers.Cookie = cookie;
     }
-    console.log('state.user.me:', state.user.me)
+    console.log('state.user.me:', state.user.me);
     if (!state.user.me) {
         ctx.store.dispatch({
             type: LOAD_USER_REQUEST,
@@ -95,7 +95,7 @@ const configureStore = (initialState, options) => {
         },
     ];
     const enhancer =
-        process.env.MODE_ENV === 'production'
+        process.env.NODE_ENV === 'production'
             ? compose(applyMiddleware(...middlewares))
             : compose(
                   applyMiddleware(...middlewares),
