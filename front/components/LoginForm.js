@@ -31,19 +31,20 @@ const LoginForm = () => {
 
     return (
         <Form onSubmit={onSubmitForm} style={{ padding: '10px' }}>
-            <div>
-                <label htmlFor="user-id">아이디</label>
-                <br />
+            <div style={{ marginBottom: '12px' }}>
+                <label htmlFor="user-id" style={{ display: 'inline-block', marginBottom: '8px' }}>
+                    아이디
+                </label>
                 <Input name="user-id" value={id} onChange={onChangeId} required />
             </div>
-            <div>
-                <label htmlFor="user-password">비밀번호</label>
-                <br />
+            <div style={{ marginBottom: '20px' }}>
+                <label htmlFor="user-password" style={{ display: 'inline-block', marginBottom: '8px' }}>
+                    비밀번호
+                </label>
                 <Input name="user-password" value={password} onChange={onChangePassword} type="password" required />
             </div>
-            <LoginError>{logInErrorReason}</LoginError>
-            <div style={{ marginTop: '10px' }}>
-                <Button type="primary" htmlType="submit" loading={isLoggingIn}>
+            <div>
+                <Button type="primary" htmlType="submit" loading={isLoggingIn} style={{ marginRight: '12px' }}>
                     로그인
                 </Button>
                 <Link href="/signup">
