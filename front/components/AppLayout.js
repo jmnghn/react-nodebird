@@ -8,23 +8,6 @@ import styled from 'styled-components';
 import LoginForm from './LoginForm';
 import UserProfile from './UserProfile';
 
-const AppContent = styled.div`
-    max-width: 1250px;
-    margin: 0 auto;
-`;
-
-const HomeLink = styled.a`
-    font-size: 32px;
-    margin: 8px 8px;
-    display: block;
-`;
-
-const SearchHashTag = styled(Input.Search)`
-    .ant-input {
-        border: 0;
-    }
-`;
-
 const AppLayout = ({ children }) => {
     const { me } = useSelector((state) => state.user);
 
@@ -35,34 +18,36 @@ const AppLayout = ({ children }) => {
 
     return (
         <>
-            <AppContent>
+            <div style={{ maxWidth: '1250px', margin: '0 auto' }}>
                 <Row gutter={8}>
                     <Col xs={24} md={6}>
-                        <Row style={{ marginBottom: '48px' }}>
-                            <Link prefetch href="/">
-                                <HomeLink style={{ fontSize: '32px' }}>😉</HomeLink>
-                            </Link>
-                        </Row>
-                        <Row>{me ? <UserProfile /> : <LoginForm />}</Row>
-                        {me && (
-                            <Row>
-                                <Link prefetch href="/profile">
-                                    <a>프로필</a>
+                        <div>
+                            <Row style={{ marginBottom: '48px' }}>
+                                <Link prefetch href="/">
+                                    <a style={{ fontSize: '32px', margin: '8px 8px', display: 'block' }}>😉</a>
                                 </Link>
                             </Row>
-                        )}
+                            <Row>{me ? <UserProfile /> : <LoginForm />}</Row>
+                            {me && (
+                                <Row>
+                                    <Link prefetch href="/profile">
+                                        <a>프로필</a>
+                                    </Link>
+                                </Row>
+                            )}
+                        </div>
                     </Col>
                     <Col xs={24} md={12}>
                         {children}
                     </Col>
                     <Col xs={24} md={6}>
-                        <SearchHashTag placeholder="# Search" onSearch={onSearch} />
-                        <Link href="">
-                            <a target="_blank">Made by Jeong myeonghyeon</a>
-                        </Link>
+                        <Input.Search placeholder="# Search" onSearch={onSearch} style={{ marginTop: '12px' }} />
+                        {/* <Link href="">
+                                <a target="_blank">Made by Jeong myeonghyeon</a>
+                            </Link> */}
                     </Col>
                 </Row>
-            </AppContent>
+            </div>
         </>
     );
 };
