@@ -115,7 +115,7 @@ const PostCard = memo(({ post }) => {
                             <Button.Group>
                                 {id && post.UserId === id ? (
                                     <>
-                                        <Button>수정</Button>
+                                        {/* <Button>수정</Button> */}
                                         <Button type="danger" onClick={onRemovePost(post.id)}>
                                             삭제
                                         </Button>
@@ -174,20 +174,20 @@ const PostCard = memo(({ post }) => {
                         itemLayout="horizontal"
                         dataSource={post.Comments || []}
                         renderItem={(item) => (
-                            <li>
-                                <Comment
-                                    author={item.User.nickname}
-                                    avatar={
-                                        <Link
-                                            href={{ pathname: '/user', query: { id: post.User.id } }}
-                                            as={`/user/${post.User.id}`}
-                                        >
+                            <Comment
+                                author={item.User.nickname}
+                                avatar={
+                                    <Link
+                                        href={{ pathname: '/user', query: { id: post.User.id } }}
+                                        as={`/user/${post.User.id}`}
+                                    >
+                                        <Avatar src={post.User.nickname[0]}>
                                             <a>{post.User.nickname[0]}</a>
-                                        </Link>
-                                    }
-                                    content={item.content}
-                                />
-                            </li>
+                                        </Avatar>
+                                    </Link>
+                                }
+                                content={item.content}
+                            />
                         )}
                     />
                 </>

@@ -1,6 +1,7 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Form, Input, Button } from 'antd';
+import { ADD_COMMENT_REQUEST } from '../reducers/post';
 
 const CommentForm = ({ post }) => {
     const [commentText, setCommentText] = useState('');
@@ -35,12 +36,14 @@ const CommentForm = ({ post }) => {
 
     return (
         <Form onSubmit={onSubmitComment}>
-            <Form.Item>
-                <Input.TextArea rows={4} value={commentText} onChange={onChangeCommentText} />
+            <Form.Item style={{'marginBottom': '8px'}}>
+                <Input.TextArea rows={4} value={commentText} onChange={onChangeCommentText} placeholder="✍🏻" />
             </Form.Item>
-            <Button type="primary" htmlType="submit" loading={isAddingComment}>
-                삐약
-            </Button>
+            <div style={{ textAlign: 'right' }}>
+                <Button type="primary" htmlType="submit" loading={isAddingComment}>
+                    남기기
+                </Button>
+            </div>
         </Form>
     );
 };

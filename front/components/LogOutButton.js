@@ -13,7 +13,7 @@ const LogOutButton = () => {
     return (
         <>
             <a onClick={onLogout} style={{ fontSize: '24px' }}>
-                로그아웃 👋🏻
+                로그아웃 👻
             </a>
         </>
     );

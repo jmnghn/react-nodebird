@@ -170,7 +170,10 @@ const reducer = (state = initialState, action) => {
                 break;
             }
             case LOAD_FOLLOWERS_SUCCESS: {
-                draft.followerList.push(action.data);
+                // draft.followerList.push(action.data);
+                action.data.forEach((d) => {
+                    draft.followerList.push(d);
+                });
                 draft.hasMoreFollower = action.data.length === 3;
                 break;
             }
@@ -183,7 +186,9 @@ const reducer = (state = initialState, action) => {
                 break;
             }
             case LOAD_FOLLOWINGS_SUCCESS: {
-                draft.followingList.push(action.data);
+                action.data.forEach((d) => {
+                    draft.followingList.push(d);
+                });
                 draft.hasMoreFollowing = action.data.length === 3;
                 break;
             }

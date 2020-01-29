@@ -23,9 +23,18 @@ const AppLayout = ({ children }) => {
                 <Row gutter={8}>
                     <Col xs={24} md={6}>
                         <div>
-                            <Row style={{ marginBottom: '66px' }}>
+                            <Row>
                                 <Link prefetch href="/">
-                                    <a style={{ fontSize: '32px', margin: '8px 8px', display: 'block' }}>😉</a>
+                                    <a
+                                        style={{
+                                            fontSize: '32px',
+                                            margin: '8px 8px',
+                                            display: 'block',
+                                            height: '114px',
+                                        }}
+                                    >
+                                        👋🏻
+                                    </a>
                                 </Link>
                             </Row>
                             <Row style={{ marginBottom: '32px' }}>{me ? <UserProfile /> : <LoginForm />}</Row>
@@ -47,7 +56,7 @@ const AppLayout = ({ children }) => {
                         {children}
                     </Col>
                     <Col xs={24} md={6}>
-                        <Input.Search placeholder="# Search" onSearch={onSearch} style={{ marginTop: '12px' }} />
+                        <Input.Search placeholder="# Search" onSearch={onSearch} style={{ marginTop: '130px' }} />
                         {/* <Link href="">
                                 <a target="_blank">Made by Jeong myeonghyeon</a>
                             </Link> */}

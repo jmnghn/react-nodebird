@@ -211,6 +211,7 @@ router.get('/:id/posts', async (req, res, next) => {
                     attributes: ['id'],
                 },
             ],
+            order: [['createdAt', 'DESC']],
         });
         res.json(posts);
     } catch (error) {

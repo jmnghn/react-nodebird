@@ -1,6 +1,7 @@
 import React, { useEffect, useCallback } from 'react';
 import { Button, List, Card, Icon } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
+import Router from 'next/router';
 import NicknameEditForm from '../components/NicknameEditForm';
 import PostCard from '../components/PostCard';
 import {
