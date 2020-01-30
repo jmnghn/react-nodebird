@@ -68,7 +68,12 @@ const PostForm = () => {
 
     return (
         <Form style={{ margin: '0px 0 30px' }} encType="multipart/form-data" onSubmit={onSubmitForm}>
-            <Input.TextArea maxLength={140} placeholder="✍🏻" value={text} onChange={onChangeText} />
+            <Input.TextArea
+                maxLength={140}
+                placeholder="메시지를 입력해주세요. ✍🏻"
+                value={text}
+                onChange={onChangeText}
+            />
             <div>
                 <input type="file" multiple hidden ref={imageInput} onChange={onChangeImages} />
                 <Button onClick={onClickImageUpload}>이미지 업로드</Button>

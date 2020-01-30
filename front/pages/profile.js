@@ -18,23 +18,6 @@ const Profile = () => {
     const { followingList, followerList, hasMoreFollower, hasMoreFollowing } = useSelector((state) => state.user);
     const { mainPosts } = useSelector((state) => state.post);
 
-    // useEffect(() => {
-    //     if (me) {
-    //         dispatch({
-    //             type: LOAD_FOLLOWERS_REQUEST,
-    //             data: me.id,
-    //         });
-    //         dispatch({
-    //             type: LOAD_FOLLOWINGS_REQUEST,
-    //             data: me.id,
-    //         });
-    //         dispatch({
-    //             type: LOAD_USER_POSTS_REQUEST,
-    //             data: me.id,
-    //         });
-    //     }
-    // }, [me && me.id]);
-
     const onUnFollow = useCallback(
         (userId) => () => {
             dispatch({
