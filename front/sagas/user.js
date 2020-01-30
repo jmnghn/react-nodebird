@@ -46,7 +46,7 @@ function* login(action) {
             data: result.data,
         });
     } catch (error) {
-        console.log(error);
+        alert(error.response.data);
         yield put({
             type: LOG_IN_FAILURE,
             error: error.response.data,
@@ -68,6 +68,7 @@ function* signUp(action) {
             type: SIGN_UP_SUCCESS,
         });
     } catch (error) {
+        alert(error.response.data);
         yield put({
             type: SIGN_UP_FAILURE,
             error: error,

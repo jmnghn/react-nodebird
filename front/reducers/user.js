@@ -118,7 +118,7 @@ const reducer = (state = initialState, action) => {
                 break;
             }
             case SIGN_UP_FAILURE: {
-                draft.isSigninUp = true;
+                draft.isSigninUp = false;
                 draft.signUpErrorReason = action.error;
                 break;
             }
