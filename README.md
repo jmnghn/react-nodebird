@@ -12,6 +12,7 @@
 
 [Styled-components](https://styled-components.com/)
 
+
 **API SERVER**
 
 [Express](https://expressjs.com/ko/)
@@ -26,7 +27,13 @@ MySQL 8.0.19
 
 Lambda
 
+
+**Deploy**
+
 AWS(EC2, ROUTE53)
+
+pm2
+
 
 **기능**
 
