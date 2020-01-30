@@ -102,7 +102,9 @@ const AppLayout = ({ children }) => {
                     <Col xs={24} md={12} style={{ marginTop: '12px' }}>
                         {children}
                     </Col>
-                    <Col xs={24} md={6}></Col>
+                    <Col xs={24} md={6} style={{ paddingTop: '12px' }}>
+                        <a href="https://github.com/jeongmyeonghyeon/react-nodebird">@GitHub</a>
+                    </Col>
                 </Row>
             </div>
         </>

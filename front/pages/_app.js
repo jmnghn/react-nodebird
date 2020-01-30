@@ -17,7 +17,7 @@ const NodeBird = ({ Component, store, pageProps }) => {
         <>
             <Provider store={store}>
                 <Helmet
-                    title="NodeBrid"
+                    title="ReactNodeBrid"
                     htmlAttributes={{ lang: 'ko' }}
                     meta={[
                         { carset: 'UTF-8' },
@@ -27,9 +27,9 @@ const NodeBird = ({ Component, store, pageProps }) => {
                                 'width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=yes,viewport-fit=cover',
                         },
                         { 'http-equiv': 'X-UA-Compatible', content: 'IE=edge' },
-                        { name: 'description', content: 'NodeBird SNS' },
-                        { property: 'og:title', content: 'NodeBird' },
-                        { property: 'og:description', content: 'NodeBird SNS' },
+                        { name: 'description', content: 'ReactNodeBrid' },
+                        { property: 'og:title', content: 'ReactNodeBrid' },
+                        { property: 'og:description', content: 'ReactNodeBrid' },
                         { property: 'og:type', content: 'website' },
                         { property: 'og:image', content: 'http://jngmnghn.com/favicon.ico' },
                     ]}

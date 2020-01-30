@@ -70,7 +70,7 @@ app.use(passport.initialize()); // expressSession 에 의존도가 있어서 그
 app.use(passport.session());
 
 app.get('/', (req, res) => {
-    res.send('nodebird back running !!!');
+    res.send('ReactNodeBird back running !!!');
 });
 
 // ROUTERS
