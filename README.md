@@ -12,7 +12,6 @@
 
 [Styled-components](https://styled-components.com/)
 
-
 **API SERVER**
 
 [Express](https://expressjs.com/ko/)
@@ -27,13 +26,11 @@ MySQL 8.0.19
 
 Lambda
 
-
 **Deploy**
 
 AWS(EC2, ROUTE53)
 
 pm2
-
 
 **기능**
 
@@ -47,6 +44,6 @@ pm2
 
 인피니트 스크롤
 
-이미지 업로드
+(s3)파일업로드
 
 SEO
