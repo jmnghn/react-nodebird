@@ -61,6 +61,8 @@ export const EDIT_NICKNAME_FAILURE = 'EDIT_NICKNAME_FAILURE';
 
 export const REMOVE_POST_OF_ME = 'REMOVE_POST_OF_ME';
 
+export const RESET_SIGNED_UP = 'RESET_SIGNED_UP';
+
 export const loginRequestAction = (data) => ({
     type: LOG_IN_REQUEST,
     data: data,
@@ -221,6 +223,9 @@ const reducer = (state = initialState, action) => {
                 draft.isEditingNickname = false;
                 draft.editNicknameErrorReason = action.error;
                 break;
+            }
+            case RESET_SIGNED_UP: {
+                draft.isSignedUp = false;
             }
             default:
                 break;
