@@ -12,6 +12,8 @@
 
 [Styled-components](https://styled-components.com/)
 
+[axios](https://github.com/axios/axios)
+
 **API SERVER**
 
 [Express](https://expressjs.com/ko/)
@@ -31,7 +33,6 @@ Lambda
 AWS(EC2, ROUTE53)
 
 pm2
-
 **기능**
 
 회원가입(cookie-session), 로그인
