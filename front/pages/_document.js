@@ -3,6 +3,7 @@ import Document, { Main, NextScript } from 'next/document';
 import { ServerStyleSheet } from 'styled-components';
 import Helmet from 'react-helmet';
 import { PropTypes } from 'prop-types';
+import '../styles/styles.scss';
 
 class MyDocument extends Document {
     static async getInitialProps(context) {
@@ -10,7 +11,7 @@ class MyDocument extends Document {
         // const initialProps = await Document.getInitialProps(context);
         const page = context.renderPage((App) => (props) => sheet.collectStyles(<App {...props} />));
         const styleTags = sheet.getStyleElement();
-        console.log('MyDocument page:', page);
+        // console.log('MyDocument page:', page);
         return { ...page, helmet: Helmet.renderStatic(), styleTags };
     }
 

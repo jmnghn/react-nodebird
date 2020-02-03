@@ -36,6 +36,12 @@ const Home = () => {
 
     return (
         <div>
+            <style jsx>{`
+                .why: {
+                    color: red;
+                }
+            `}</style>
+            <div className="why example">Hello World!</div>
             {me && <PostForm />}
             {mainPosts.map((c) => {
                 return <PostCard key={c.id} post={c} />;
@@ -45,7 +51,7 @@ const Home = () => {
 };
 
 Home.getInitialProps = async (context) => {
-    console.log(Object.keys(context));
+    console.log('35353535', Object.keys(context));
     context.store.dispatch({
         type: LOAD_MAIN_POSTS_REQUEST,
     });

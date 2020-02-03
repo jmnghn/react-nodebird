@@ -30,7 +30,7 @@ const AppLayout = ({ children }) => {
     };
 
     return (
-        <>
+        <div style={{ overflowX: 'hidden' }}>
             <header
                 style={{
                     position: 'fixed',
@@ -107,7 +107,7 @@ const AppLayout = ({ children }) => {
                     </Col>
                 </Row>
             </div>
-        </>
+        </div>
     );
 };
 

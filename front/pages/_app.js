@@ -24,7 +24,7 @@ const NodeBird = ({ Component, store, pageProps }) => {
                         {
                             name: 'viewport',
                             content:
-                                'width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=yes,viewport-fit=cover',
+                                'width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no',
                         },
                         { 'http-equiv': 'X-UA-Compatible', content: 'IE=edge' },
                         { name: 'description', content: 'ReactNodeBrid' },
@@ -63,7 +63,7 @@ NodeBird.propTypes = {
 };
 
 NodeBird.getInitialProps = async (context) => {
-    console.log(context);
+    // console.log(context);
     const { ctx, Component } = context;
     let pageProps = {};
 
@@ -73,7 +73,7 @@ NodeBird.getInitialProps = async (context) => {
     if (ctx.isServer && cookie) {
         axios.defaults.headers.Cookie = cookie;
     }
-    console.log('state.user.me:', state.user.me);
+    // console.log('state.user.me:', state.user.me);
     if (!state.user.me) {
         ctx.store.dispatch({
             type: LOAD_USER_REQUEST,
@@ -94,15 +94,17 @@ const configureStore = (initialState, options) => {
             next(action);
         },
     ];
-    const enhancer =
-        process.env.NODE_ENV === 'production'
-            ? compose(applyMiddleware(...middlewares))
-            : compose(
-                  applyMiddleware(...middlewares),
-                  !options.isServer && window.__REDUX_DEVTOOLS_EXTENSION__ !== 'undefined'
-                      ? window.__REDUX_DEVTOOLS_EXTENSION__()
-                      : (f) => f,
-              );
+    // const enhancer =
+    //     process.env.NODE_ENV === 'production'
+    //         ? compose(applyMiddleware(...middlewares))
+    //         : compose(
+    //               applyMiddleware(...middlewares),
+    //               !options.isServer && window.__REDUX_DEVTOOLS_EXTENSION__ !== 'undefined'
+    //                   ? window.__REDUX_DEVTOOLS_EXTENSION__()
+    //                   : (f) => f,
+    //           );
+    const enhancer = compose(applyMiddleware(...middlewares));
+
     const store = createStore(reducer, initialState, enhancer);
     store.sagaTask = sagaMiddleware.run(rootSaga);
     return store;
