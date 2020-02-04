@@ -4,9 +4,11 @@ const local = require('./local');
 
 module.exports = () => {
     passport.serializeUser((user, done) => {
+        console.log('passport.serializeUser');
         return done(null, user.id); // 세션에 무엇을 저장할지
     });
     passport.deserializeUser(async (id, done) => {
+        console.log('passport.deserializeUser');
         try {
             const user = await db.User.findOne({
                 where: { id },
@@ -30,6 +32,7 @@ module.exports = () => {
             });
             return done(null, user); // req.user 에 무엇을 저장할지
         } catch (error) {
+            console.log('deserializeUser');
             console.log(error);
             return done(error);
         }

@@ -9,6 +9,7 @@ dotenv.config();
 const passport = require('passport');
 const hpp = require('hpp');
 const helmet = require('helmet');
+const RedisStore = require('connect-redis')(expressSession);
 
 const passportConfig = require('./passport');
 const db = require('./models');
@@ -53,20 +54,38 @@ app.use(
     }),
 );
 app.use(cookieParser(process.env.COOKIE_SECRET));
-app.use(
-    expressSession({
-        resave: false,
-        saveUninitialized: false,
-        secret: process.env.COOKIE_SECRET,
-        cookie: {
-            httpOnly: true,
-            secure: false, // https를 쓸 때 true
-            domain: prod && '.jngmnghn.com',
-        },
-        name: 'ngh',
+// app.use(
+//     expressSession({
+//         resave: false,
+//         saveUninitialized: false,
+//         secret: process.env.COOKIE_SECRET,
+//         cookie: {
+//             httpOnly: true,
+//             secure: false, // https를 쓸 때 true
+//             domain: prod && '.jngmnghn.com',
+//         },
+//         name: 'ngh',
+//     }),
+// );
+const sessionOption = {
+    resave: false,
+    saveUninitialized: false,
+    secret: process.env.COOKIE_SECRET,
+    cookie: {
+        httpOnly: true,
+        secure: false, // https를 쓸 때 true
+        domain: prod && '.jngmnghn.com',
+    },
+    name: 'ngh',
+    store: new RedisStore({
+        host: process.env.REDIS_HOST,
+        port: process.env.REDIS_PORT,
+        pass: process.env.REDIS_PASSWORD,
+        logErrors: true,
     }),
-);
-app.use(passport.initialize()); // expressSession 에 의존도가 있어서 그 하단에서 실행해줘야 한다.
+};
+app.use(expressSession(sessionOption));
+app.use(passport.initialize()); // session 에 의존도가 있어서 그 하단에서 실행해줘야 한다.
 app.use(passport.session());
 
 app.get('/', (req, res) => {

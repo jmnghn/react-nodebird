@@ -111,7 +111,7 @@ router.post('/login', (req, res, next) => {
                     ],
                     attributes: ['id', 'nickname', 'userId'],
                 });
-                console.log(fullUser);
+                // console.log(fullUser);
                 return res.json(fullUser);
             } catch (error) {
                 next(error);
