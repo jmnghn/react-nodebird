@@ -11,6 +11,7 @@ import Helmet from 'react-helmet';
 import AppLayout from '../components/AppLayout';
 import reducer from '../reducers';
 import { LOAD_USER_REQUEST } from '../reducers/user';
+import { composeWithDevTools } from 'redux-devtools-extension';
 
 const NodeBird = ({ Component, store, pageProps }) => {
     return (
@@ -94,16 +95,11 @@ const configureStore = (initialState, options) => {
             next(action);
         },
     ];
-    // const enhancer =
-    //     process.env.NODE_ENV === 'production'
-    //         ? compose(applyMiddleware(...middlewares))
-    //         : compose(
-    //               applyMiddleware(...middlewares),
-    //               !options.isServer && window.__REDUX_DEVTOOLS_EXTENSION__ !== 'undefined'
-    //                   ? window.__REDUX_DEVTOOLS_EXTENSION__()
-    //                   : (f) => f,
-    //           );
-    const enhancer = compose(applyMiddleware(...middlewares));
+    const enhancer =
+        process.env.NODE_ENV === 'production'
+            ? compose(applyMiddleware(...middlewares))
+            : composeWithDevTools(applyMiddleware(...middlewares));
+    // const enhancer = compose(applyMiddleware(...middlewares));
 
     const store = createStore(reducer, initialState, enhancer);
     store.sagaTask = sagaMiddleware.run(rootSaga);

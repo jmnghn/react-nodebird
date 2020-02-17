@@ -46,6 +46,7 @@
         "eslint-plugin-react": "^7.17.0",
         "eslint-plugin-react-hooks": "^2.3.0",
         "nodemon": "^2.0.2",
+        "redux-devtools-extension": "^2.13.8",
         "webpack": "^4.41.5"
     }
 }
