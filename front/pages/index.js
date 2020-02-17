@@ -41,7 +41,6 @@ const Home = () => {
                     color: red;
                 }
             `}</style>
-            <div className="why example">Hello World!</div>
             {me && <PostForm />}
             {mainPosts.map((c) => {
                 return <PostCard key={c.id} post={c} />;
